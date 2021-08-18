@@ -1,0 +1,308 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+<style>
+.sbuttons {
+  bottom: 5%;
+  position: fixed;
+  margin: 1em;
+  left: 0;
+}
+.sbutton {
+  display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  margin: 20px auto 0;
+  box-shadow: 0px 5px 11px -2px rgba(0, 0, 0, 0.18), 0px 4px 12px -7px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  -webkit-transition: all .1s ease-out;
+  transition: all .1s ease-out;
+  position: relative;
+  z-index: 1 !important;
+}
+.sbutton > i {
+  font-size: 38px;
+  line-height: 60px;
+  transition: all .2s ease-in-out;
+  transition-delay: 2s;
+}
+.sbutton:active,
+.sbutton:focus,
+.sbutton:hover {
+  box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+}
+/*.sbutton:not(:last-child) {*/
+/*  width: 60px;*/
+/*  height: 60px;*/
+/*  margin: 20px auto 0;*/
+/*  opacity: 0;*/
+/*}*/
+/*.sbutton:not(:last-child) > i {*/
+/*  font-size: 25px;*/
+/*  line-height: 60px;*/
+/*  transition: all .3s ease-in-out;*/
+/*}*/
+/*.sbuttons:hover .sbutton:not(:last-child) {*/
+/*  opacity: 1;*/
+/*  width: 60px;*/
+/*  height: 60px;*/
+/*  margin: 15px auto 0;*/
+/*}*/
+/*.sbutton:nth-last-child(1) {*/
+/*  -webkit-transition-delay: 25ms;*/
+/*  transition-delay: 25ms;*/
+/*}*/
+/*.sbutton:not(:last-child):nth-last-child(2) {*/
+/*  -webkit-transition-delay: 20ms;*/
+/*  transition-delay: 20ms;*/
+/*}*/
+/*.sbutton:not(:last-child):nth-last-child(3) {*/
+/*  -webkit-transition-delay: 40ms;*/
+/*  transition-delay: 40ms;*/
+/*}*/
+/*.sbutton:not(:last-child):nth-last-child(4) {*/
+/*  -webkit-transition-delay: 60ms;*/
+/*  transition-delay: 60ms;*/
+/*}*/
+/*.sbutton:not(:last-child):nth-last-child(5) {*/
+/*  -webkit-transition-delay: 80ms;*/
+/*  transition-delay: 80ms;*/
+/*}*/
+/*.sbutton:not(:last-child):nth-last-child(6) {*/
+/*  -webkit-transition-delay: 100ms;*/
+/*  transition-delay: 100ms;*/
+/*}*/
+ 
+[tooltip]:before {
+  font-family: 'Roboto';
+  font-weight: 600;
+  border-radius: 2px;
+  background-color: #585858;
+  color: #fff;
+  content: attr(tooltip);
+  font-size: 12px;
+  /*visibility: hidden;*/
+  opacity: 0;
+  padding: 5px 7px;
+  margin-left: 10px;
+  position: absolute;
+  left: 100%;
+  bottom: 20%;
+  white-space: nowrap;
+}
+ 
+[tooltip]:hover:before,
+[tooltip]:hover:after {
+  visibility: visible;
+  opacity: 1;
+}
+.sbutton.mainsbutton {
+  background: #2ab1ce;
+}
+.sbutton.gplus {
+  background: #F44336;
+}
+.sbutton.pinteres {
+  background: #e60023;
+}
+.sbutton.twitt {
+  background: #03A9F4;
+}
+.sbutton.call {
+  background: #3F51B5;
+}
+.sbutton.whatsapp {
+  background: #00e676;
+}
+._all_prods{
+  display: flex;
+flex: wrap;
+  justify-content: flex-end;
+}
+</style>
+{% endblock %}
+{% block body %}
+<img src="/image/banner.png" class="img-fluid">
+    <div class="container">
+    <div class="row">
+      {#}
+        <div class="col-md-2">
+            <div class="mt-5 _cat_main">
+              <h5 class="font-weight-bold orange-text" style="font-family: Oswald, sans-serif, Arial, sans-serif; ">CATEGORIES</h5>
+                  {{ render(controller("App\\Controller\\CategoryController::main_category")) }}
+        </div> 
+        </div> #}
+        <div class="col-md-12">
+          <h3 class="font-weight-bold orange-text mt-5" style="font-family: Oswald, sans-serif, Arial, sans-serif; ">POPULAR CATEGORIES</h3>
+          <div class="row">
+            {% for post in front_cat %}
+            <div class="col-md-3 mt-3">
+                    <div class="card">
+                      <a href="{{ path('items_list',{'categoryname':post.category.name, 'id': post.category.id }) }}" class="font-weight-bold text-warning">
+                        <img class="card-img-top img-fluid" src="{{ asset('/uploads/images/' ~ post.getImage()) | imagine_filter('thumbnail') }}">
+                        <div class="bg-dark pt-2 pb-2  text-center">
+                             {{ post.category.name }} 
+                         </div>
+                        </a>
+                    </div>
+                </div> 
+                       
+        {% endfor %}
+          </div>          
+        <div class="sbuttons">
+ 
+            <a href="https://wa.me/message/IWC2L6X3N3YVA1" target="_blank" class="sbutton whatsapp" tooltip="WhatsApp"><i class="fab fa-whatsapp"></i></a>  
+             
+            <a href="tel:8670038288" target="_blank" class="sbutton call" tooltip="Facebook"><i class="fas fa-phone"></i></a>
+           
+            {#<a href="#" target="_blank" class="sbutton gplus" tooltip="Google Plus"><i class="fab fa-google-plus-g"></i></a>#}
+           
+            {#<a href="#" target="_blank" class="sbutton twitt" tooltip="Twitter"><i class="fab fa-twitter"></i></a>#}
+           
+            {#<a href="#" target="_blank" class="sbutton pinteres" tooltip="Pinterest"><i class="fab fa-pinterest-p"></i></a>#}
+           
+            {#<a target="_blank" class="sbutton mainsbutton" tooltip="Share"><i class="fas fa-share-alt"></i></a>#}
+             
+          </div>            
+            
+                {% for message in app.flashes('cart_msg') %}
+                <div class="alert alert-info mt-3">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        <div class="mt-5">
+          <h3 class="font-weight-bold orange-text" style="font-family: Oswald, sans-serif, Arial, sans-serif; ">WHY US?</h3>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="d-flex border border-warning">
+                <div class="flex-shrink-1">
+                  <img src="/image/icons/delivery.png" class="pl-1">
+                </div>
+                <div class="w-100 pt-4">
+                  <h4>QUICK DELEVERY. </h4>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="d-flex border border-warning">
+                <div class="flex-shrink-1">
+                  <img src="/image/icons/local.png" class="pl-1">
+                </div>
+                <div class="w-100 pt-4">
+                  <h4>LOCAL PRODUCTS. </h4>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="d-flex border border-warning">
+                <div class="flex-shrink-1">
+                  <img src="/image/icons/service.png" class="pl-1">
+                </div>
+                <div class="w-100 pt-4">
+                  <h4>BEST SERVICES. </h4>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="d-flex border border-warning">
+                <div class="flex-shrink-1">
+                  <img src="/image/icons/rupee.png" class="pl-1">
+                </div>
+                <div class="w-100 pt-4">
+                  <h4>REASONABLE PRICE. </h4>
+                </div>
+              </div>
+            </div>
+
+          
+               
+        </div>  
+    
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="font-weight-bold orange-text mt-5" style="font-family: Oswald, sans-serif, Arial, sans-serif; ">LATEST PRODUCTS</h3>
+          </div>
+                {#<a href="https://wa.me/message/IWC2L6X3N3YVA1" class="btn btn-success rounded-0"><i class="fab fa-whatsapp"></i> Whatsapp</a>#}
+    
+  
+                {% for post in data|slice(0,8) %}
+                <div class="col-md-3 mt-3">
+                        <div class="card" style="overflow: hidden;">
+                            <img class="card-img-top img-fluid _home_img" src="{{ asset('/uploads/images/' ~ post.getImage()) | imagine_filter('thumbnail') }}">
+                            <div class="card-body">
+                              
+                              <h5 class="card-title font-weight-bold">{{ post.title }}</h5>
+                          
+                            <a class="btn btn-outline-warning btn-block" href="{{ path('view_product',{'id': post.id}) }}">View More</a>
+                            </div>
+                        </div>
+                    </div> 
+                           
+            {% endfor %}
+              </div>
+              <div class="_all_prods">
+                <a href="/get-all-products" class="btn btn-warning rounded-0">VIEW ALL PRODUCTS</a>
+              </div>
+            </div>
+
+        </div>
+        </div>
+        
+    </div>
+    <div class="container">
+               
+      <div class="row mt-3">
+        <div class="col-md-6 ">
+          <div class="card bg-dark text-warning text-center">
+            <div class="card-body">
+              <h3 class="card-title" style="font-family: Oswald, sans-serif, Arial, sans-serif; ">Our Happy Customers</h3>
+              <h3  class="counter" data-count="334" style="font-family: Oswald, sans-serif, Arial, sans-serif; ">	</h3>
+            </div>
+          </div>
+      
+        </div>
+        <div class="col-md-6">
+          <div class="card bg-dark text-warning text-center">
+            <div class="card-body">
+              <h3 class="card-title" style="font-family: Oswald, sans-serif, Arial, sans-serif; ">Visitors</h3>
+              <h3  class="counter" data-count="1324" style="font-family: Oswald, sans-serif, Arial, sans-serif; ">	</h3>
+            </div>
+          </div>
+        </div>
+      </div>	
+    </div>
+   {{ render(controller('App\\Controller\\MainController::top_products')) }}
+{% endblock %}
+
+{% block javascripts %}
+  <script>
+$(document).ready(function(){
+
+$('.counter').each(function() {
+  var $this = $(this),
+      countTo = $this.attr('data-count');
+
+  $({ countNum: $this.text()}).animate({
+    countNum: countTo
+  },
+
+  {
+
+    duration: 3000,
+    easing:'linear',
+    step: function() {
+      $this.text(Math.floor(this.countNum));
+    },
+    complete: function() {
+      $this.text(this.countNum);
+      //alert('finished');
+    }
+  });
+});
+});
+
+
+  </script>
+{% endblock %}

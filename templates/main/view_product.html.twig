@@ -1,0 +1,172 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="m-5">
+            <h2 class="text-center font-weight-bold">Product</h2>
+        </div>    
+        <div class="row">
+            <div class="col-md-4">
+                    <img class="card-img-top img-fluid" src="{{ asset('/uploads/images/' ~ post.getImage()) | imagine_filter('thumbnail') }}">
+                     </div> 
+                     <div class="col-md-6">
+                        <h4 class="card-title font-weight-bold">{{ post.title }}</h4>
+                        <hr>
+                        {#}
+                        <h3 class="card-title mt-2 mb-2 "><del>Rs. {{ post.price }}</del>&nbsp;&nbsp;&nbsp;Rs. {{ post.newPrice }}</h3>
+                        #}
+                    <form method="POST">     
+                    <div id="res"></div>
+                    <div class="input-group">
+                        <button  class="quantity-left-minus rounded-0 inc_dec"   data-type="minus" data-field="">
+                          <i class="fas fa-minus"></i>
+                        </button>
+                            <input type="text" id="quantity" name="quantity" class="form-control text-center" value="1" min="1" max="100" style="max-width: 60px !important;" readonly>
+          
+                        <button  class="quantity-right-plus rounded-0 inc_dec"  data-type="plus" data-field="">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                </div>
+                    <div class="card p-3 mt-2">
+                        <label>Available Quantity/Size(s):</label>
+                        <select class="form-control" name="size" id="selectSize">
+                            {% for sizeAttr in post.sizeQtyAttr %}
+                                <option value="{{ sizeAttr.id}}" >
+                                    {{ sizeAttr.attrName}}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <br>
+                         <div class="row">
+                            <div class="col">
+                                {# {% if isInBasket %} 
+                                    <button class="btn btn-danger btn-block" disabled>  Addded to Cart</button>
+                                    {% else %}#} 
+                                    {% if post.stockFlag == true %}
+                                            {% if isInBasket %} 
+                                                <button class="btn btn-outline-info btn-block" disabled><i class="fas fa-shopping-cart"></i>  Added to Cart</button>
+                                            {% else %}
+                                                <button class="btn btn-outline-info btn-block"><i class="fas fa-shopping-cart"></i>  Add to Cart</button>
+                                            {% endif %}
+                                        {% else %}
+                                        <button class="btn btn-outline-info btn-block rounded-0" disabled><i class="fas fa-shopping-cart"></i> Out of Stock</button>
+                                    {% endif %}
+                                </div>
+                         </div>
+                         {# <a class="btn btn-primary btn-block" href="/contact"> Contact Seller</a> #}
+                         </div>
+                          </form>
+                    </div>
+                    <div class="col-md-2">
+                            <h4 class="font-weight-bold">Social Links</h4>
+                            <hr>
+                                <a class="btn btn-outline-primary btn-block">
+                                    <i class="fab fa-facebook"></i>&nbsp;&nbsp;Facebook
+                                </a> <a class="btn btn-outline-success btn-block mt-2">
+                                    <i class="fab fa-whatsapp"></i>&nbsp;&nbsp;Whatsapp
+                                </a>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="font-weight-bold">Product Description</h4>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-title">
+                                    {{ post.content|striptags|raw  }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {{ render(controller('App\\Controller\\MainController::top_products')) }}
+                </div> 
+        </div>
+
+
+
+    </div>
+
+
+ <!-- 5457589342 -->
+{% endblock %}
+
+{% block javascripts %}
+
+   <script>
+$("input[type=radio]").change(function() { 
+    alert($(this).val());
+});
+    </script>
+
+    <script>
+        console.log($('#selectSize').find(":selected").text());
+        $val  = $('#selectSize').find(":selected").val();
+        $.ajax({
+            url: "{{ path('_price') }}",
+            type: "POST",
+            data: {p_id: $val},
+            success:  function(data){
+                var data = $.parseJSON(data);
+                    var wrapper = "<div>"+
+                        "<h3 class='text-decoration-line-through'><del>Rs."+ data.old_price +"</del>"
+                        +"&nbsp;&nbsp;&nbsp;<span class='text-danger font-weight-bold'>Rs."+ data.new_price +"</span></h3></div>";
+                        $("#res").html(wrapper);
+                // }
+            }
+            });
+        $("#selectSize").change(function(){
+        $val  = $('#selectSize').find(":selected").val();
+        $.ajax({
+            url: "{{ path('_price') }}",
+            type: "POST",
+            data: {p_id: $val},
+            success:  function(data){
+                var data = $.parseJSON(data);
+                    var wrapper = "<div>"+
+                        "<h3 class='text-decoration-line-through'><del>Rs."+ data.old_price +"</del>"
+                        +"&nbsp;&nbsp;&nbsp;<span class='text-danger font-weight-bold'>Rs."+ data.new_price +"</span></h3></div>";
+                        $("#res").html(wrapper);
+                // }
+            }
+            });
+        });
+    </script>
+
+      <script>
+$(document).ready(function(){
+
+var quantitiy=0;
+   $('.quantity-right-plus').click(function(e){
+        
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        var quantity = parseInt($('#quantity').val());
+        
+        // If is not undefined
+            
+            $('#quantity').val(quantity + 1);
+
+          
+            // Increment
+        
+    });
+
+     $('.quantity-left-minus').click(function(e){
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        var quantity = parseInt($('#quantity').val());
+        
+        // If is not undefined
+      
+            // Increment
+            if(quantity>1){
+            $('#quantity').val(quantity - 1);
+            }
+    });
+    
+});
+  </script>
+{% endblock %}

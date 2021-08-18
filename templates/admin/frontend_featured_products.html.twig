@@ -1,0 +1,168 @@
+{% extends 'admin.html.twig' %}
+   {% block stylesheets %}
+    <style>
+        .flex_wrapper{
+            display: flex;
+            flex-wrap: nowrap;
+        }
+        .flex_item{
+            width: 100%;
+        }
+    </style>
+   {% endblock %}
+{%   block body %}
+
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item active" aria-current="page">Add Homepage Featured Product..</li>
+            </ol>
+          </nav>
+          {{ form_start(form_front_cat)}}
+          <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="form-row">
+                      <div class="col">
+                        <div class="input-file-container">
+                          <label class="input-file-trigger font-weight-bold">Upload Product Image</label>
+                          {{ form_row(form_front_cat.image ,{'label':false, 'attr':{'class':'mb-3 input-file'}}) }}       
+                      </div> 
+                      </div> 
+                      <div class="col">
+                        <p class="file-return"></p>  
+                      {# <img id="blah" class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Upload.svg" alt="your image" />
+                 #}
+                      </div>
+                    </div>
+                  </div>
+              </div>    
+              
+           <div class="card mt-2">   
+            <div class="card-body">
+              <div class="form-row mt-2">
+                <div class="col">
+                  <label class="font-weight-bold">Category</label>
+                  <select name="item_category" class="form-control">
+                    {% for category in categories.categoryList %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-info rounded-0 btn-block mt-2 text-white">Add Product</button>
+            </div>
+              </div>
+         {{ form_end(form_front_cat) }}
+      </div>
+      
+      <div class="container">
+        <div class="flex_wrapper">
+          {% for post in front_cat %}
+          <div class="flex_item mt-3">
+                  <div class="card">
+                      <img class="card-img-top img-fluid" src="{{ asset('/uploads/images/' ~ post.getImage()) | imagine_filter('thumbnail') }}">
+                      <div class="bg-dark">
+                          <h5 class="text-center text-warning"> {{ post.category.name }} </h5>
+                       </div>
+                       <div class="card-footer text-white">
+                         <a class="btn btn-info" href="">Edit</a>
+                         <a class="btn btn-danger" href="{{ path('top_cat_delete',{'id': post.id}) }}">Delete</a>
+                       </div>
+                  </div>
+              </div> 
+                     
+      {% endfor %}
+        </div>
+      </div>
+
+
+<div class="container mt-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">Add Homepage Top Categories..</li>
+        </ol>
+      </nav>
+    {{ form_start(form_front_top_prod)}}
+    <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="form-row">
+                <div class="col">
+                  <div class="input-file-container">
+                    <label class="input-file-trigger font-weight-bold">Upload Product Image</label>
+                    {{ form_row(form_front_top_prod.image ,{'label':false, 'attr':{'class':'mb-3 input-file'}}) }}       
+                </div> 
+                </div> 
+                <div class="col">
+                  <p class="file-return"></p>  
+                {# <img id="blah" class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Upload.svg" alt="your image" />
+           #}
+                </div>
+              </div>
+            </div>
+        </div>    
+        
+     <div class="card mt-2">   
+      <div class="card-body">
+        <div class="form-row mt-2">
+          <div class="col">
+            <label class="font-weight-bold">Category</label>
+            <select name="item_category" class="form-control">
+              {% for category in categories.categoryList %}
+                  <option value="{{ category.id }}">{{ category.name }}</option>
+              {% endfor %}
+              </select>
+          </div>
+          </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-info rounded-0 btn-block mt-2 text-white">Add Product</button>
+      </div>
+        </div>
+    {{ form_end(form_front_top_prod) }}
+</div>
+<div class="container">
+    <div class="flex_wrapper">
+        {% for post in front_top_prod %}
+        <div class="flex_item mt-3">
+                <div class="card">
+                    <img class="card-img-top img-fluid" src="{{ asset('/uploads/images/' ~ post.getImage()) | imagine_filter('thumbnail') }}">
+                    <div class="bg-dark">
+                        <h5 class="text-center text-warning"> {{ post.category.name }} </h5>
+                     </div>
+                </div>
+            </div> 
+                   
+    {% endfor %}
+      </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+
+<script>
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    
+    reader.onload = function(e) {
+      $('#blah').attr('src', e.target.result);
+    }
+    
+    reader.readAsDataURL(input.files[0]); // convert to base64 string
+  }
+}
+
+$("#item_image").change(function() {
+  readURL(this);
+});
+</script>
+
+{% endblock %}

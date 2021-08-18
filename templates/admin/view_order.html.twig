@@ -1,0 +1,49 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+<div class="container mt-3">
+    <h2 class="breadcrumb">Customer Order</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="list-group font-weight-bold">
+                <li class="list-group-item">Name: <scan class="text-danger">{{ order.name }}</scan></li>
+                <li class="list-group-item">Email: <scan class="text-danger">{{ order.email }}</scan></li>
+                <li class="list-group-item">Phone: <scan class="text-danger">{{ order.phone }}</scan></li>
+                <li class="list-group-item">Phone: <scan class="text-danger">{{ order.pincode }}</scan></li>
+                <li class="list-group-item">Address:<scan class="text-danger"> {{ order.address }}</scan></li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <table class="table">
+                <thead>
+                    <th>Title</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Total Order(s)</th>
+                </thead>
+                <tbody>
+                              
+                {% for order_items in orders.orderproduct %}    
+                <tr>             
+                    <td>{{ order_items.item.title }}</td>            
+                    <td>{{ order_items.size }}</td>
+                    <td>{{ order_items.price }}</td>
+                    <td>{{ order_items.productNo }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>            
+        </div>
+        <div class="col-md-2">
+            <form method="POST">
+              <select name="confirm_stat" class="form-control rounded-0">
+                    <option value="confirmed">Confirm</option>
+                    <option value="cancelled">Cancel</option>
+              </select>
+              <button class="btn btn-info rounded-0 text-white mt-2 btn-block">Update Order</button>
+            </form>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

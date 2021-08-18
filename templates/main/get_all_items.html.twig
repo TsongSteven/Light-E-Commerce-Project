@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container">
+    <h3 class="font-weight-bold orange-text mt-5" style="font-family: Oswald, sans-serif, Arial, sans-serif; ">ALL PRODUCTS</h3>
+           
+    <div class="row">
+        {% for post in items %}
+        <div class="col-md-3 mt-3">
+            <div class="card" style="overflow: hidden;">
+                <img class="card-img-top img-fluid _home_img" src="{{ asset('/uploads/images/' ~ post.getImage()) | imagine_filter('thumbnail') }}">
+                <div class="card-body">
+                
+                <h5 class="card-title font-weight-bold">{{ post.title }}</h5>
+            
+                <a class="btn btn-outline-warning btn-block" href="{{ path('view_product',{'id': post.id}) }}">View More</a>
+                </div>
+            </div>
+        </div>   
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

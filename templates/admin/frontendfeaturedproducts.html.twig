@@ -1,0 +1,61 @@
+
+<div class="container">
+  <h2 class="font-weight-bold text-center alert alert-info">Add Homepage Featured Products</h2>
+    {{ form_start(form)}}
+    <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="form-row">
+                <div class="col">
+                  <div class="input-file-container">
+                    <label class="input-file-trigger font-weight-bold">Upload Product Image</label>
+                    {{ form_row(form.image ,{'label':false, 'attr':{'class':'mb-3 input-file'}}) }}       
+                </div> 
+                </div> 
+                <div class="col">
+                  <p class="file-return"></p>  
+                {# <img id="blah" class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Upload.svg" alt="your image" />
+           #}
+                </div>
+              </div>
+            </div>
+        </div>    
+        
+     <div class="card mt-2">   
+      <div class="card-body">
+        <div class="form-row mt-2">
+          <div class="col">
+            <label class="font-weight-bold">Category</label>
+            <select name="item_category" class="form-control">
+              {% for category in categories.categoryList %}
+                  <option value="{{ category.id }}">{{ category.name }}</option>
+              {% endfor %}
+              </select>
+          </div>
+          </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-info rounded-0 btn-block mt-2 text-white">Add Product</button>
+      </div>
+        </div>
+   {{ form_end(form) }}
+</div>
+
+<div class="container">
+  <div class="row">
+    {% for post in front_cat %}
+    <div class="col-md-3 mt-3">
+            <div class="card">
+                <img class="card-img-top img-fluid" src="{{ asset('/uploads/images/' ~ post.getImage()) | imagine_filter('thumbnail') }}">
+                <div class="bg-dark">
+                    <h5 class="text-center text-warning"> {{ post.category.name }} </h5>
+                 </div>
+            </div>
+        </div> 
+               
+{% endfor %}
+  </div>
+</div>
+
+

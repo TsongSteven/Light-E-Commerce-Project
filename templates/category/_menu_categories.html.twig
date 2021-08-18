@@ -1,0 +1,6 @@
+
+{% for category in categories %}
+<li class="nav-link">     
+ <a class="text-white"  href="{{ path('items_list',{'categoryname':category.name, 'id': category.id }) }}">{{ category.name|upper }}<span class="sr-only"></span></a>    
+</li>
+{% endfor %}

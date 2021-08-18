@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<div class="example-wrapper">
+    {% for category in categories %}
+        <a href="{{ path('items_list', {'id': category.id }) }}">{{ category.name }}</a>
+    {% endfor %}
+</div>
+{% endblock %}

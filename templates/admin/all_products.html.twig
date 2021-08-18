@@ -1,0 +1,40 @@
+{% extends "admin.html.twig" %}
+
+{% block body %}
+<div class="m-5">
+    <h2 class="text-center font-weight-bold">Posts</h2>
+</div>
+{% for message in app.flashes('notice') %}
+    <div class="alert alert-danger">
+        {{message}}
+    </div>
+{% endfor %}    
+<div class="row">
+<table class="table">
+    <thead class="black white-text">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Image</th>
+            <th scope="col">Title</th>
+            <th scope="col">Price</th>
+            {# <th scope="col">Action</th> #}
+        </tr>
+</thead>
+{% for post in products %}
+<tbody>
+    <tr class=" lighten-2">
+        <td scope="row">{{ post.id}}</td>
+        <td><img src="{{ asset('/uploads/images/' ~ post.image) | imagine_filter('thumbnail') }}" style="height: 50px"></td>
+        <td><h3 class="card-title font-weight-bold">{{ post.title }}</h3></td>
+        {#}<td> <a class="card-title font-weight-bold">Price: Rs. {{ post.price }}</a></td> #}
+         <td><a class="btn btn-primary" href="{{ path('edit_post',{'id': post.id}) }}">EDIT</a>
+        {#<a class="btn btn-danger" href="{{ path('delete_post',{'id': post.id}) }}">DELETE</a>
+        </td> #}
+    </tr>
+    </tbody>
+
+                   
+{% endfor %}
+ </table>
+</div>
+{% endblock %}

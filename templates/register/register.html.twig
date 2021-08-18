@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h3 class="font-weight-bold mt-2">Create Account</h3>
+    <hr>
+    <div class="col-md-6 offset-md-3">
+        {{ form_start(form) }}
+        <div>
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name,{'label': false, 'attr':{'class':'form-control'}}) }}
+        </div>
+        <div>
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email,{'label': false, 'attr':{'class':'form-control'}}) }}
+        </div>
+        <div>
+            {{ form_label(form.mobile) }}
+            {{ form_widget(form.mobile,{'label': false, 'attr':{'class':'form-control'}}) }}
+        </div>
+        <div>
+            {{ form_label(form.address) }}
+            {{ form_widget(form.address,{'label': false, 'attr':{'class':'form-control'}}) }} 
+        </div>
+        
+        <div>
+            {{ form_label(form.pincode) }}
+            {{ form_widget(form.pincode,{'label': false, 'attr':{'class':'form-control'}}) }}
+        </div>
+        <div>
+            <label>Username</label>
+            {{form_widget(form.user.vars.prototype.username,{'label': false, 'attr':{'class':'form-control'}}) }}
+        </div>
+        <div>
+            <label>Password</label>
+            {{form_widget(form.user.vars.prototype.password,{'label': false, 'attr':{'class':'form-control'}}) }}
+        </div>
+        <div>
+            <button type="submit" class="btn btn-success btn-block rounded-0 mt-2">Create Account</button>
+        </div>
+    {{ form_end(form,{'render_rest': false}) }}
+    </div>
+
+    </div>
+{% endblock %}   

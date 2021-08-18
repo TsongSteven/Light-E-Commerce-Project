@@ -1,0 +1,283 @@
+{% extends 'admin.html.twig' %}
+   {% block stylesheets %}
+<style>
+.btn_wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn_wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}   
+.input-file-container {
+    position: relative;
+    width: 225px;
+  } 
+  .js .input-file-trigger {
+    display: block;
+    padding: 14px 45px;
+    background: #39D2B4;
+    color: #fff;
+    font-size: 1em;
+    transition: all .4s;
+    cursor: pointer;
+  }
+  .js .input-file {
+    position: absolute;
+    top: 0; left: 0;
+    width: 225px;
+    opacity: 0;
+    padding: 14px 0;
+    cursor: pointer;
+  }
+  .js .input-file:hover + .input-file-trigger,
+  .js .input-file:focus + .input-file-trigger,
+  .js .input-file-trigger:hover,
+  .js .input-file-trigger:focus {
+    background: #34495E;
+    color: #39D2B4;
+  }
+  
+  .file-return {
+    margin: 0;
+  }
+  .file-return:not(:empty) {
+    margin: 1em 0;
+  }
+  .js .file-return {
+    font-style: italic;
+    font-size: .9em;
+    font-weight: bold;
+  }
+  .js .file-return:not(:empty):before {
+    content: "Selected file: ";
+    font-style: normal;
+    font-weight: normal;
+  }
+  
+  .txtcenter {
+    margin-top: 4em;
+    font-size: .9em;
+    text-align: center;
+    color: #aaa;
+  }
+  .copy {
+    margin-top: 2em;
+  }
+  .copy a {
+    text-decoration: none;
+    color: #1ABC9C;
+  }
+</style>
+   {% endblock %}
+   {% block _item_update_sizeQtyAttr_entry_widget %}
+
+      <tr class="rem_update_data">
+        <td >
+          {{ form_widget(form.attrName) }}
+        </td>
+        <td >
+          {{ form_widget(form.old_price) }}
+        </td>
+        <td >
+          {{ form_widget(form.new_price) }}
+        </td>
+      </tr>
+
+ {% endblock _item_update_sizeQtyAttr_entry_widget %}
+{%   block body %}
+<div class="container">
+  <h2 class="font-weight-bold text-center alert alert-info">Add Product</h2>
+  {{ form_start(form._token,{'attr':{novalidate: 'novalidate'}}) }}
+    <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="form-row">
+                <div class="col">
+                  <div class="input-file-container">
+                    <label class="input-file-trigger font-weight-bold">Upload Product Image</label>
+                    {{ form_row(form.image ,{'label':false, 'attr':{'class':'mb-3 input-file'}}) }}
+                    
+                </div> 
+                </div> 
+                <div class="col">
+                  <p class="file-return"></p>  
+                {# <img id="blah" class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Upload.svg" alt="your image" />
+           #}
+                </div>
+              </div>
+            </div>
+        </div>    
+        
+     <div class="card mt-2">   
+      <div class="card-body">
+        <div class="form-row mt-2">
+
+          <div class="col">
+            <label class="font-weight-bold">Product Title</label>
+            {{ form_row(form.title,{'label':false, 'attr':{'class':'form-control rounded-0','placeholder':'Upload Title'}}) }}
+          </div>
+          <div class="col">
+            <label class="font-weight-bold">Category</label>
+            <select name="item_category" class="form-control">
+              {% for category in categories.categoryList %}
+                  <option value="{{ category.id }}">{{ category.name }}</option>
+              {% endfor %}
+              </select>
+          </div>
+          </div>
+      </div>
+    </div>
+    <div class="form-row mt-2">
+        <div class="col"><label class="font-weight-bold">Description</label>{{ form_row(form.content,{'label':false}) }}</div>
+    </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card mt-2">
+              <div class="card-body">
+                <p class="font-weight-bold">Quantity and Size Attributes</p>
+            <div class="field_wrapper">
+              
+              {% form_theme form _self %}
+            
+              <table class="tags" data-prototype="{{ form_widget(form.sizeQtyAttr.vars.prototype)|e('html_attr') }}">
+                {% for sizeQtyAttrData  in form.sizeQtyAttr %}
+              
+                    {{ form_errors(sizeQtyAttrData) }}
+                    {{ form_widget(sizeQtyAttrData) }}
+              
+                 {% endfor %}              
+              </table>
+              {{ form_errors(form.sizeQtyAttr) }}
+            </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card mt-2">
+              <div class="card-body">
+                <label class="font-weight-bold">Stock</label>
+                {{ form_row(form.stock_flag,{'label': false, 'attr':{'class':'custom-select'}})}}
+              </div>
+            </div>
+          </div>
+        </div>
+       <button type="submit" class="btn btn-info rounded-0 btn-block mt-2 text-white">Add Product</button>
+
+      </div>
+        </div>
+        {{ form_rest(form) }}
+</div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+
+<script>
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    
+    reader.onload = function(e) {
+      $('#blah').attr('src', e.target.result);
+    }
+    
+    reader.readAsDataURL(input.files[0]); // convert to base64 string
+  }
+}
+
+$("#item_image").change(function() {
+  readURL(this);
+});
+</script>
+<script>
+
+var fileInput  = document.querySelector( ".input-file" ),  
+    button     = document.querySelector( ".input-file-trigger" ),
+    the_return = document.querySelector(".file-return");
+      
+button.addEventListener( "keydown", function( event ) {  
+    if ( event.keyCode == 13 || event.keyCode == 32 ) {  
+        fileInput.focus();  
+    }  
+});
+button.addEventListener( "click", function( event ) {
+   fileInput.focus();
+   return false;
+});  
+fileInput.addEventListener( "change", function( event ) {  
+    the_return.innerHTML = this.value;  
+}); 
+</script>
+
+<script type="text/javascript">
+var $addTagLink = $('<a href="#" class="add_tag_link badge badge-danger p-2 mt-2">+ Add Attribute</a>');
+var $newLinkLi = $('<div></div>').append($addTagLink);
+jQuery(document).ready(function() {
+   var $collectionHolder = $('table.tags');
+    $collectionHolder.append($newLinkLi);
+    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+    
+    $addTagLink.on('click', function(e) {
+        e.preventDefault();
+        addTagForm($collectionHolder, $newLinkLi);
+    });
+  
+});
+
+function addTagForm($collectionHolder, $newLinkLi) {
+    var prototype = $collectionHolder.data('prototype');
+    var index = $collectionHolder.data('index');
+    var newForm = prototype.replace(/__name__/g, index);
+    $collectionHolder.data('index', index + 1);
+    var $wrapper = $('<div class="mt-2"></div>');
+    var $newFormLi = $('<div></div>').append(newForm);
+    $wrapper.append($newFormLi);
+    $wrapper.append('<a href="#" class="remove-tag  badge badge-info m-1 p-2"> - Remove Attributes</a>');
+    
+    $newLinkLi.before($wrapper);
+    $('.remove-tag').click(function(e) {
+        e.preventDefault();
+        
+        $(this).parent().remove();
+        
+        return false;
+    });
+}
+
+// $(document).ready(function(){
+//     var maxField = 10; //Input fields increment limitation
+//     var addButton = $('.add_button'); //Add button selector
+//     var wrapper = $('.field_wrapper'); //Input field wrapper
+//     var fieldHTML = '<div class="d-flex" id="rem"> <div class="w-100"><input type="text" id="item_sizeQtyAttr___name___attrName" name="item[sizeQtyAttr][__name__][attrName]" required="required" maxlength="255" class="form-control mb-3 rounded-0" placeholder="XL, XXL 250gm, 11 Oz etc" /> </div><div class="flex-shrink-1"><a href="javascript:void(0);" class="remove_button" title="Add field"><label class="badge badge-info ml-1">-</label></a>  </div></div>'; //New input field html 
+//     var x = 1; //Initial field counter is 1
+    
+//     //Once add button is clicked
+//     $(addButton).click(function(){
+//         //Check maximum number of input fields
+//         if(x < maxField){ 
+//             x++; //Increment field counter
+//             $(wrapper).append(fieldHTML); //Add field html
+//         }
+//     });
+    
+//     //Once remove button is clicked
+//     $(wrapper).on('click', '.remove_button', function(e){
+//         e.preventDefault();
+//        // $(this).parent('div').remove();
+//        $('#rem').remove();
+//     });
+// });
+</script>
+{% endblock %}

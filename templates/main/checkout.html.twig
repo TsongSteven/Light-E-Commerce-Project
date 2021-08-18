@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{%   block body %}
+<div class="container mt-5">
+<div class="row">
+<div class="col-md-8">
+<h2 class="font-weight-bold">Your Order</h2>
+<table class="table">
+  <thead class="grey white-text">
+    <tr>
+      <th scope="col">PROD INDEX</th>
+      <th scope="col">IMAGE</th>
+      <th scope="col">PRODUCT</th>
+      <th scope="col">PRICE</th>
+      <th scope="col">SIZE</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% set items = app.session.get('basket') %}
+      {% for item in items %}
+      <tr>
+        <td>{{ item["items"][0] }}</td>
+        <td><img class="card-img-top img-fluid" src="{{ asset('/uploads/images/' ~ item["items"][1] ) | imagine_filter('thumbnail') }}" style="height: 40px; width: 40px"></td>
+        <td>{{ item["items"][2] }}</td>
+        <td>{{ item["items"][3] }}</td>
+        <td>{{ item["items"][4] }}</td>
+      </tr>
+      {% endfor %}
+   
+  </tbody>
+</table>   
+<h5 class="font-weight-bold">Total Price: INR {{ price }}</h5> 
+</div>
+{# data-prefill.email="{{ app.session.get('email') }}" #}
+<div class="col-md-4">
+<div class="row">
+  {# <div class="col">
+    <form  method="POST" action="/paynow" class="btn btn-danger">   
+      <script src="https://checkout.razorpay.com/v1/checkout.js"
+       data-key="rzp_test_snXomEn9s8HBoJ"
+       data-amount="{{ app.session.get("amount") }}"
+       data-button-text="Buy Now"
+       data-name="Amlapong"
+       data-description="Razorpay"
+       data-image="{{ asset('/image/logo/ap_logo.png') }}"
+       data-prefill.name="{{ app.session.get('name') }}"
+       data-prefill.email="email@email.com"
+       data-theme.color="#ff752950">
+         </script>
+
+  </form>
+  </div> #}
+  <div class="col">
+    <h2 class="font-weight-bold">Payment Method</h2>
+    <hr>
+    <a href="/cash-on-delivery" class="btn btn-info rounded-0"> Cash on Delivery</a>
+  </div>
+</div>
+ </div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+<div class="container mt-3">
+{% for message in app.flashes('notice') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
+        <table class="table">
+        <thead class="black white-text">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Orders</th>
+            <th scope="col">Action</th>
+            </tr>
+        </thead>
+    {% for order in orders %}
+        {% if order.OrderStatus == 'process' %}
+        <tbody>
+            <tr class="bg-grey lighten-2" style="background-color: #d3d3d3d3;">
+            <th scope="row">{{ order.id}}</th>
+            <td>{{ order.name}}</td>
+            <td>{{  order.email}}</td>
+            <td>{{ order.OrderStatus }}</td>
+            <td>
+                <a class="btn btn-warning" href="{{ path('view_order',{'id': order.id}) }}">VIEW</a> 
+            </td>
+            </tr>
+        </tbody>
+        {% else %}
+            <tbody>
+            <tr>
+            <th scope="row">{{ order.id}}</th>
+            <td>{{ order.name}}</td>
+            <td>{{  order.email}}</td>
+            <td>{{ order.OrderStatus }}</td>
+            <td>
+                <a class="btn btn-warning" href="{{ path('view_order',{'id': order.id}) }}">VIEW</a> 
+            </td>
+            </tr>
+        </tbody>
+        {% endif %}
+    {% endfor %}
+    {{ knp_pagination_render(orders) }}
+    </table>
+</div>
+{% endblock %}

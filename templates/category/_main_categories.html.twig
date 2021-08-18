@@ -1,0 +1,7 @@
+
+{% for category in categories %}
+<!-- <li class="list-group-item"><h5 class="font-weight-bold" style="font-family: 'Poppins', sans-serif; color: #525260;">CATEGORY</h3></li>
+<li class="list-group-item">     -->
+<a  style="font-family: 'Poppins', sans-serif;" href="{{ path('items_list',{'categoryname':category.name, 'id': category.id }) }}">{{ category.name|upper }}<span class="sr-only"></span></a>    
+<!-- </li> -->
+{% endfor %}

@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+<style>
+  input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
+{% endblock %}
+{%   block body %}
+<div class="container mt-5">
+          
+<div class="row">
+    <div class="col-md-8">
+        <h2 >Billing Address</h2>               
+        {{ form_start(form,{'attr':{novalidate: 'novalidate'}}) }}
+            <div class="form-group">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name,{'attr':{'class':'form-control rounded-0'}}) }}
+            <div class="text-danger">{{ form_errors(form.name) }}</div>
+            </div>
+            <div class="form-group">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email,{'attr':{'class':'form-control rounded-0'}}) }}
+            <div class="text-danger">{{ form_errors(form.email) }}</div>
+            </div>
+            <div class="form-group">
+            {{ form_label(form.phone) }}
+            {{ form_widget(form.phone,{'attr':{'class':'form-control rounded-0'}}) }}
+            <div class="text-danger">{{ form_errors(form.phone) }}</div>
+            </div>
+            <div class="form-group">
+            {{ form_label(form.address) }}
+            {{ form_widget(form.address,{'attr':{'class':'form-control rounded-0'}}) }}
+            <div class="text-danger">{{ form_errors(form.address) }}</div>
+            </div>
+            <div class="form-group">
+            {{ form_label(form.pincode) }}
+            {{ form_widget(form.pincode,{'attr':{'class':'form-control rounded-0'}}) }}
+            {# {{ form_widget(form.size) }} #}
+            {# <input type="hidden" name="size" value={{ size}}> #}
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-outline-danger btn-block rounded-0">Proceed to Order</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+<div class="col-md-4">
+<h2>Your Order</h2>
+<div class="row">
+    <table class="table">
+      <thead class="grey white-text">
+        <tr>
+          <th scope="col">PROD INDEX</th>
+          <th scope="col">IMAGE</th>
+          <th scope="col">PRODUCT</th>
+          <th scope="col">PRICE</th>
+          <th scope="col">SIZE</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        {% set items = app.session.get('basket') %}
+          {% for item in items %}
+          <tr>
+            <td>{{ item["items"][0] }}</td>
+            <td><img class="card-img-top img-fluid" src="{{ asset('/uploads/images/' ~ item["items"][1] ) | imagine_filter('thumbnail') }}" style="height: 40px; width: 40px"></td>
+            <td>{{ item["items"][2] }}</td>
+            <td>{{ item["items"][3] }}</td>
+            <td>{{ item["items"][4] }}</td>
+          </tr>
+          {% endfor %}
+       
+      </tbody>
+    </table>   
+    <h5 class="font-weight-bold">Total Price: INR {{ price }}</h5>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <scan class="badge badge-danger">NOTE</scan>
+      <p>Due to currect pandamic restriction we may not able to deliver to the location which is bit far from the listed PINCODE. We will call you and notify, if we are able/not able to deliver requested product to the address that you have mentioned.</p>
+    </div>
+  </div>
+</div>  
+
+</div>
+</div>
+{{ render(controller('App\\Controller\\MainController::top_products')) }}
+{% endblock %}

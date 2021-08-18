@@ -1,0 +1,29 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="p-3 border border-warning text-center">
+                    <i class="fas fa-shopping-cart text-info"></i>
+                    <p class="font-weight-bold text-danger">Order Confirmed</p>
+                    <span class="font-weight-bold">{{ render(controller('App\\Controller\\AdminController::countProcess')) }}</span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="p-3 border border-info text-center">
+                    <i class="fas fa-shopping-cart text-info"></i>
+                    <p class="font-weight-bold text-danger">Total Post</p>
+                    <span class="font-weight-bold">{{ render(controller('App\\Controller\\AdminController::countPost')) }}</span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="p-3 border border-success text-center">
+                    <i class="fas fa-shopping-cart text-info"></i>
+                    <p class="font-weight-bold text-danger">Order Confirmed</p>
+                    <span class="font-weight-bold">{{ render(controller('App\\Controller\\AdminController::countProcess')) }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

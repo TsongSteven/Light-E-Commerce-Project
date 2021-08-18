@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Invoice</title>
+  </head>
+  <body>
+    <h1 class="text-center">Invoice</h1>
+    <hr>
+<h2 class"alert-success text-center m-4">Your Order</h2>
+                                    <table class="table">
+                                      <thead class="grey white-text">
+                                        <tr>
+                                          <th scope="col">NAME</th>
+                                          <th scope="col">PRODUCT</th>
+                                          <th scope="col">PRICE</th>
+                                          <th scope="col">SIZE</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                        
+                                          <td>{{ items.name }}</td>
+                                          <td>{{ product_name }}</td>
+                                          <td>{{ items.amount }}</td>
+                                          <td>{{ items.size }}</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>     
+  </body>
+</html>
