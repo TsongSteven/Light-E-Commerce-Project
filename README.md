@@ -15,7 +15,8 @@ Light E Commerce Project, Which is Live www.amlapong.com, initially integrated p
 <ul>
   <li>View Product</li>
     <li>Add Product to Cart</li>
-    <li>Increment and Decrement product while adding and in cart</li>
-    <li>Remove Product From Cart</li>
+    <li>Increment and Decrement product quantity while adding into cart</li>
+    <li>Update/ Increment and Decrement product quantity in cart</li>
+  <li>Remove Product From Cart</li>
   <li>Check out</li>
 </ul>
