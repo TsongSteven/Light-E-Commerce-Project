@@ -1,5 +1,5 @@
 # Symfony5-Light-E-Commerce-Project
-Light E Commerce Project, Which is Live www.amlapong.com, initially integrated payment gateway Razorpay, later removed. It doesn't consist of user registration/creating account and such.
+Light E Commerce Project, initially integrated payment gateway Razorpay, later removed. It doesn't consist of user registration/creating account and such.
 
 <b>Some of the features are</b>
 
